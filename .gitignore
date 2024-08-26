@@ -1,0 +1,7 @@
+venv
+.env
+
+listings.csv
+test.ipynb
+
+mysql_data
