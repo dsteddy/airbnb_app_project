@@ -60,8 +60,97 @@ const getListingById = (req, res) => {
         });
 };
 
+const postListing = (req, res) => {
+    const {
+        name,
+        description,
+        neighborhood_overview,
+        picture_url,
+        host_name,
+        host_about,
+        host_picture_url,
+        neighbourhood_cleansed,
+        latitude,
+        longitude,
+        room_type,
+        amenities,
+        price,
+        minimum_nights,
+        maximum_nights,
+        number_of_reviews,
+        number_of_reviews_l30d,
+        review_scores_rating,
+        review_scores_cleanliness,
+        review_scores_checkin,
+        review_scores_communication,
+        review_scores_location
+    } = req.body;
+    const sqlQuery = `
+        INSERT INTO listings(
+            name,
+            description,
+            neighborhood_overview,
+            picture_url,
+            host_name,
+            host_about,
+            host_picture_url,
+            neighbourhood_cleansed,
+            latitude,
+            longitude,
+            room_type,
+            amenities,
+            price,
+            minimum_nights,
+            maximum_nights,
+            number_of_reviews,
+            number_of_reviews_l30d,
+            review_scores_rating,
+            review_scores_cleanliness,
+            review_scores_checkin,
+            review_scores_communication,
+            review_scores_location
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const values = [
+        name,
+        description,
+        neighborhood_overview,
+        picture_url,
+        host_name,
+        host_about,
+        host_picture_url,
+        neighbourhood_cleansed,
+        latitude,
+        longitude,
+        room_type,
+        amenities,
+        price,
+        minimum_nights,
+        maximum_nights,
+        number_of_reviews,
+        number_of_reviews_l30d,
+        review_scores_rating,
+        review_scores_cleanliness,
+        review_scores_checkin,
+        review_scores_communication,
+        review_scores_location
+    ];
+
+    database
+        .query(sqlQuery, values)
+        .then(([result]) => {
+            res.status(201).send({ id: result.insertId });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+};
+
 module.exports = {
     getListings,
     getListingsCount,
-    getListingById
+    getListingById,
+    postListing,
 }

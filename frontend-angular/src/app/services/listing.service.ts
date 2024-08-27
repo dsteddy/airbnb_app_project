@@ -24,4 +24,8 @@ export class ListingService {
   getListingById(id: string):  Observable<Listing> {
     return this.http.get<Listing>(`${this.apiUrl}/${id}`);
   }
+
+  postListing(newListing: Listing): Observable<Listing> {
+    return this.http.post<Listing>(`${this.apiUrl}`, newListing)
+  }
 }

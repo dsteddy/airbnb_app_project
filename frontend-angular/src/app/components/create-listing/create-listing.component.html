@@ -1,1 +1,113 @@
-<p>create-listing works!</p>
+<form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" />
+    </div>
+
+    <div>
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+
+    <div>
+      <label for="neighborhood_overview">Neighborhood Overview</label>
+      <textarea id="neighborhood_overview" formControlName="neighborhood_overview"></textarea>
+    </div>
+
+    <div>
+      <label for="picture_url">Picture URL</label>
+      <input id="picture_url" formControlName="picture_url" />
+    </div>
+
+    <div>
+      <label for="host_name">Host Name</label>
+      <input id="host_name" formControlName="host_name" />
+    </div>
+
+    <div>
+      <label for="host_about">Host About</label>
+      <textarea id="host_about" formControlName="host_about"></textarea>
+    </div>
+
+    <div>
+      <label for="host_picture_url">Host Picture URL</label>
+      <input id="host_picture_url" formControlName="host_picture_url" />
+    </div>
+
+    <div>
+      <label for="neighbourhood_cleansed">Neighbourhood Cleansed</label>
+      <input id="neighbourhood_cleansed" formControlName="neighbourhood_cleansed" />
+    </div>
+
+    <div>
+      <label for="latitude">Latitude</label>
+      <input id="latitude" type="number" formControlName="latitude" />
+    </div>
+
+    <div>
+      <label for="longitude">Longitude</label>
+      <input id="longitude" type="number" formControlName="longitude" />
+    </div>
+
+    <div>
+      <label for="room_type">Room Type</label>
+      <input id="room_type" formControlName="room_type" />
+    </div>
+
+    <div>
+      <label for="amenities">Amenities (comma-separated)</label>
+      <input id="amenities" formControlName="amenities" />
+    </div>
+
+    <div>
+      <label for="price">Price</label>
+      <input id="price" type="number" formControlName="price" />
+    </div>
+
+    <div>
+      <label for="minimum_nights">Minimum Nights</label>
+      <input id="minimum_nights" type="number" formControlName="minimum_nights" />
+    </div>
+
+    <div>
+      <label for="maximum_nights">Maximum Nights</label>
+      <input id="maximum_nights" type="number" formControlName="maximum_nights" />
+    </div>
+
+    <div>
+      <label for="number_of_reviews">Number of Reviews</label>
+      <input id="number_of_reviews" type="number" formControlName="number_of_reviews" />
+    </div>
+
+    <div>
+      <label for="number_of_reviews_l30d">Number of Reviews (Last 30 Days)</label>
+      <input id="number_of_reviews_l30d" type="number" formControlName="number_of_reviews_l30d" />
+    </div>
+
+    <div>
+      <label for="review_scores_rating">Review Scores Rating</label>
+      <input id="review_scores_rating" type="number" formControlName="review_scores_rating" />
+    </div>
+
+    <div>
+      <label for="review_scores_cleanliness">Review Scores Cleanliness</label>
+      <input id="review_scores_cleanliness" type="number" formControlName="review_scores_cleanliness" />
+    </div>
+
+    <div>
+      <label for="review_scores_checkin">Review Scores Check-in</label>
+      <input id="review_scores_checkin" type="number" formControlName="review_scores_checkin" />
+    </div>
+
+    <div>
+      <label for="review_scores_communication">Review Scores Communication</label>
+      <input id="review_scores_communication" type="number" formControlName="review_scores_communication" />
+    </div>
+
+    <div>
+      <label for="review_scores_location">Review Scores Location</label>
+      <input id="review_scores_location" type="number" formControlName="review_scores_location" />
+    </div>
+
+    <button type="submit" [disabled]="listingForm.invalid">Submit</button>
+  </form>
