@@ -19,6 +19,7 @@ node_modules
 .history/*
 
 # Miscellaneous
+.angular
 /.angular/cache
 .sass-cache/
 /connect.lock
