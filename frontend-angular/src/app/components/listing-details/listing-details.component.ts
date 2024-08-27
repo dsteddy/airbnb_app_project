@@ -20,7 +20,7 @@ export class ListingDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const listingId = this.route.snapshot.paramMap.get('id')!;
+    const listingId = +this.route.snapshot.paramMap.get('id')!;
     this.listingService.getListingById(listingId).subscribe((data: Listing) => {
       this.listing = data;
     });

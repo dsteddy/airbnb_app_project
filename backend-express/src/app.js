@@ -11,5 +11,6 @@ app.get("/api/listings", listingsControllers.getListings);
 app.get("/api/listings/count", listingsControllers.getListingsCount);
 app.get("/api/listings/:id", listingsControllers.getListingById);
 app.post("/api/listings", listingsControllers.postListing);
+app.delete("/api/listings/:id", listingsControllers.deleteListingById);
 
 module.exports = app;

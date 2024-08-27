@@ -15,7 +15,7 @@ export class ListingCardComponent {
 
   constructor(private router: Router) {}
 
-  viewListingDetails(id: string): void {
+  viewListingDetails(id: number): void {
     this.router.navigate(['/listing', id]);
   }
 }

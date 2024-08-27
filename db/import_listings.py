@@ -63,7 +63,7 @@ def import_listings():
             with closing(connection.cursor()) as cursor:
                 create_table_query = """
                     CREATE TABLE IF NOT EXISTS listings (
-                        id VARCHAR(255) PRIMARY KEY,
+                        id INT PRIMARY KEY,
                         name VARCHAR(255),
                         description TEXT,
                         neighborhood_overview TEXT,
@@ -201,18 +201,6 @@ def clean_listings(df: pd.DataFrame) -> pd.DataFrame:
     # Convert List to String
     df_cleaned["amenities"] = df_cleaned["amenities"].str.replace('[', '').str.replace(']', '').str.replace('"', '').str.replace('\\u2019', "'")
 
-    # # Replace NaN with 0
-    # cols_nan_to_zero = [
-    #     "price",
-    #     "review_scores_rating",
-    #     "review_scores_cleanliness",
-    #     "review_scores_checkin",
-    #     "review_scores_communication",
-    #     "review_scores_location",
-    #     ]
-    # for col in cols_nan_to_zero:
-    #     df_cleaned[col] = df_cleaned[col].fillna(0.00)
-
     # Drop missing host_name
     cols_nan_to_drop = [
         "host_name",
@@ -224,6 +212,10 @@ def clean_listings(df: pd.DataFrame) -> pd.DataFrame:
         "review_scores_location",
         ]
     df_cleaned = df_cleaned.dropna(subset=cols_nan_to_drop)
+
+    # Reset ID
+    df_cleaned = df_cleaned.drop(columns='id').reset_index()
+    df_cleaned.rename({'index' : 'id'}, axis=1, inplace=True)
 
     return df_cleaned
 

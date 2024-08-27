@@ -21,7 +21,7 @@ export class ListingService {
     return this.http.get<ListingsCount>(`${this.apiUrl}/count`);
   }
 
-  getListingById(id: string):  Observable<Listing> {
+  getListingById(id: number):  Observable<Listing> {
     return this.http.get<Listing>(`${this.apiUrl}/${id}`);
   }
 

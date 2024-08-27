@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ListingService } from '../../services/listing.service';
 import { Listing } from '../../models/listing.model';
@@ -10,41 +10,41 @@ import { Listing } from '../../models/listing.model';
   templateUrl: './create-listing.component.html',
   styleUrl: './create-listing.component.css'
 })
-export class CreateListingComponent implements OnInit {
-  listingForm!: FormGroup;
+export class CreateListingComponent {
+  listingForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private listingService: ListingService,
-  ) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private listingService: ListingService) {
     this.listingForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       neighborhood_overview: [''],
-      picture_url: [''],
+      picture_url: ['', Validators.required],
       host_name: ['', Validators.required],
       host_about: [''],
       host_picture_url: [''],
       neighbourhood_cleansed: [''],
-      latitude: [null, Validators.required],
-      longitude: [null, Validators.required],
+      latitude: ['', [Validators.required, Validators.pattern('^-?\\d{1,3}\\.\\d{1,7}$')]],
+      longitude: ['', [Validators.required, Validators.pattern('^-?\\d{1,3}\\.\\d{1,7}$')]],
       room_type: ['', Validators.required],
       amenities: [''],
-      price: [null, Validators.required],
-      minimum_nights: [1, Validators.required],
-      maximum_nights: [null, Validators.required],
+      price: ['', [Validators.required, Validators.min(0)]],
+      minimum_nights: ['', [Validators.required, Validators.min(1)]],
+      maximum_nights: ['', [Validators.required, Validators.min(1)]],
     });
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.listingForm.valid) {
-      const newListing: Listing = this.listingForm.value;
-      this.listingService.postListing(newListing).subscribe(response => {
-        console.log('Listing created:', response);
-
+      this.listingService.postListing(this.listingForm.value as Listing).subscribe({
+        next: (response) => {
+          // this.listingForm.reset();
+          console.log("Succes", this.listingForm)
+        },
+        error: (error) => {
+          console.error("Error adding listing:", error);
+        }
       });
     }
   }
 }
+
