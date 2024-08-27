@@ -83,11 +83,4 @@ export class ListingsListComponent implements OnInit {
     this.getListings();
     this.getListingsCount();
   }
-
-  @Output()
-  sendListing: EventEmitter<Listing> = new EventEmitter<Listing>();
-
-  showDetails(clickedListing: Listing): void {
-    this.sendListing.emit(clickedListing);
-  }
 }

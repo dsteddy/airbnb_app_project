@@ -1,7 +1,9 @@
-<div class="listing-card">
+<div class="listing-card" (click)="viewListingDetails(listing.id)">
+    <img src="{{ listing.picture_url }}" alt="{{ listing.name }}">
     <h2>{{ listing.name }}</h2>
-    <p>{{ listing.neighbourhood }}</p>
+    <h3>{{ listing.neighbourhood_cleansed }}</h3>
     <p>{{ listing.room_type }}</p>
     <p>{{ listing.price }} per night</p>
+    <p>{{ listing.review_scores_rating }}⭐</p>
     <p>{{ listing.number_of_reviews }} reviews</p>
 </div>

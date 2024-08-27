@@ -9,13 +9,19 @@ import { ListingsCount } from '../models/listingsCount.model';
 })
 export class ListingService {
 
+  private apiUrl = 'http://localhost:3000/api/listings'
+
   constructor(private http: HttpClient) { }
 
   getListings(page: number = 1): Observable<Listing[]> {
-    return this.http.get<Listing[]>(`http://localhost:3000/api/listings?page=${page}`);
+    return this.http.get<Listing[]>(`${this.apiUrl}?page=${page}`);
   }
 
   getListingsCount(): Observable<ListingsCount> {
-    return this.http.get<ListingsCount>("http://localhost:3000/api/listings/count");
+    return this.http.get<ListingsCount>(`${this.apiUrl}/count`);
+  }
+
+  getListingById(id: string):  Observable<Listing> {
+    return this.http.get<Listing>(`${this.apiUrl}/${id}`);
   }
 }

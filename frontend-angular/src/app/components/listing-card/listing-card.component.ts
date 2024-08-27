@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Listing } from '../../models/listing.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listing-card',
@@ -11,4 +12,10 @@ import { Listing } from '../../models/listing.model';
 export class ListingCardComponent {
   @Input()
   listing!: Listing;
+
+  constructor(private router: Router) {}
+
+  viewListingDetails(id: string): void {
+    this.router.navigate(['/listing', id]);
+  }
 }

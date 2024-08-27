@@ -1,0 +1,28 @@
+<div class="listing-details" *ngIf="listing">
+    <div class="listing-header">
+        <img class="listing-main-image" src="{{ listing.picture_url }}" alt="{{ listing.name }}">
+        <div class="listing-info">
+            <h1 class="listing-title">{{ listing.name }}</h1>
+            <p class="listing-title">{{ listing.neighbourhood_cleansed }}</p>
+            <p class="listing-description">{{ listing.neighborhood_overview }}</p>
+            <p><strong>Room Type:</strong> {{ listing.room_type }}</p>
+            <p>
+                <strong>Location Rating:</strong> {{ listing.review_scores_location }}⭐ |
+                <strong>Communication:</strong> {{ listing.review_scores_communication }}⭐ |
+                <strong>Check-in:</strong> {{ listing.review_scores_checkin }}⭐ |
+                <strong>Cleanliness:</strong> {{ listing.review_scores_cleanliness }}⭐
+            </p>
+            <p><strong>Price:</strong> {{ listing.price }} per night</p>
+            <p><strong>Overall Rating:</strong> {{ listing.review_scores_rating }}⭐</p>
+            <p><strong>{{ listing.number_of_reviews }} reviews </strong>dont {{ listing.number_of_reviews_l30d }} dans les 30 derniers jours</p>
+            <p><strong>Équipements : </strong>{{ listing.amenities }}</p>
+            <div class="host-info">
+                <img class="host-picture" src="{{ listing.host_picture_url }}" alt="{{ listing.host_name }}">
+                <p class="host-name"><strong>Host:</strong> {{ listing.host_name }}</p>
+            </div>
+            <p class="host-description">{{ listing.host_about }}</p>
+            <p><strong>Minimum Nights:</strong> {{ listing.minimum_nights }}</p>
+            <p><strong>Maximum Nights:</strong> {{ listing.maximum_nights }}</p>
+        </div>
+    </div>
+</div>

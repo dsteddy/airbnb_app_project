@@ -3,7 +3,7 @@ venv
 .env
 
 # Data / Test files
-listings.csv
+*.csv
 mysql_data
 test.ipynb
 

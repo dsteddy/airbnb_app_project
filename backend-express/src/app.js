@@ -9,5 +9,6 @@ const listingsControllers = require ("./controllers/listingsControllers");
 
 app.get("/api/listings", listingsControllers.getListings);
 app.get("/api/listings/count", listingsControllers.getListingsCount);
+app.get("/api/listings/:id", listingsControllers.getListingById)
 
 module.exports = app;

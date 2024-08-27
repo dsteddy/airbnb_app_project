@@ -1,0 +1,98 @@
+.listing-details {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1000px; /* Adjust max-width for a larger layout */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Flex container for the main image and details */
+.listing-header {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 20px; /* Space between the image and the content */
+}
+
+.listing-main-image {
+  flex: 1; /* Allow the image to take available space */
+  max-width: 300px; /* Fixed max width for the image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.listing-info {
+  flex: 2; /* Allow the content to take more space */
+}
+
+.listing-title {
+  margin-top: 0;
+  font-size: 2.5em;
+  color: #ff00bf;
+  text-align: left;
+}
+
+.listing-description {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.listing-info p {
+  margin: 10px 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.listing-info p strong {
+  color: #ff00bf;
+}
+
+.host-info {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between the host picture and name */
+  margin: 20px 0;
+}
+
+.host-picture {
+  width: 80px; /* Increased width for a larger image */
+  height: 80px; /* Increased height */
+  border-radius: 50%; /* Circular image */
+  object-fit: cover;
+}
+
+.host-name {
+  margin: 0;
+  font-size: 1.2em; /* Slightly larger font size */
+  display: flex;
+  align-items: center;
+}
+
+.host-description {
+  margin-top: 10px;
+  font-size: 1.1em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .listing-header {
+      flex-direction: column; /* Stack image and details vertically on smaller screens */
+      align-items: center; /* Center align items */
+  }
+
+  .listing-main-image {
+      max-width: 100%; /* Full width on smaller screens */
+  }
+  
+  .host-info {
+      flex-direction: column; /* Stack host picture and name vertically on smaller screens */
+      align-items: flex-start; /* Align to the start */
+  }
+  
+  .host-picture {
+      width: 70px; /* Adjust size for smaller screens */
+      height: 70px;
+      margin-bottom: 10px; /* Space below the host picture */
+  }
+}
