@@ -11,7 +11,7 @@ export interface Listing {
     latitude: number;
     longitude: number;
     room_type: string;
-    amenities: string[];
+    amenities: string;
     price: number;
     minimum_nights: number;
     maximum_nights: number;
