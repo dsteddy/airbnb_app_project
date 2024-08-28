@@ -1,0 +1,57 @@
+/* Navbar container */
+nav {
+    background-color: #333;
+    padding: 10px 20px; /* Add horizontal padding */
+    height: 60px; /* Fixed height for the navbar */
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between the left and right items */
+}
+
+/* Container for the navbar links */
+nav .nav-links {
+    display: flex;
+    align-items: center;
+}
+
+/* Unordered list inside the navbar */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* List items in the navbar */
+nav ul li {
+    margin: 0 15px;
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+/* Links inside list items */
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px; /* Padding inside the button */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, color 0.3s, padding 0.3s; /* Smooth transitions */
+}
+
+/* Icon styling */
+nav ul li a i {
+    margin-right: 8px; /* Space between icon and text */
+    color: #ff00bf; /* Icon color */
+}
+
+/* Change the background color and text color on hover */
+nav ul li a:hover {
+    color: #ff00bf;
+    background-color: rgba(255, 0, 191, 0.2); /* Light background color on hover */
+    padding: 10px 15px; /* Increased padding on hover */
+}

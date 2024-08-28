@@ -4,9 +4,7 @@ export interface Listing {
     description: string;
     neighborhood_overview: string;
     picture_url: string;
-    host_name: string;
-    host_about: string;
-    host_picture_url: string;
+    host_id: number;
     neighbourhood_cleansed: string;
     latitude: number;
     longitude: number;
@@ -22,4 +20,7 @@ export interface Listing {
     review_scores_checkin: number;
     review_scores_communication: number;
     review_scores_location: number;
+    host_name: string;
+    host_about: string;
+    host_picture_url: string;
 }

@@ -49,9 +49,6 @@ def create_listings_table(cursor):
             neighborhood_overview TEXT,
             picture_url VARCHAR(512),
             host_id INT,
-            host_name VARCHAR(255),
-            host_about TEXT,
-            host_picture_url VARCHAR(512),
             neighbourhood_cleansed TEXT,
             latitude DECIMAL(10, 7),
             longitude DECIMAL(10, 7),
@@ -74,13 +71,13 @@ def create_listings_table(cursor):
 def insert_listings_data(cursor, listings_df: pd.DataFrame):
     insert_query = """
         INSERT INTO listings (
-            id, name, description, neighborhood_overview, picture_url, host_id, host_name, host_about,
-            host_picture_url, neighbourhood_cleansed, latitude, longitude, room_type, amenities, price, minimum_nights,
+            id, name, description, neighborhood_overview, picture_url, host_id,
+            neighbourhood_cleansed, latitude, longitude, room_type, amenities, price, minimum_nights,
             maximum_nights, number_of_reviews, number_of_reviews_l30d, review_scores_rating,
             review_scores_cleanliness, review_scores_checkin, review_scores_communication,
             review_scores_location
         ) VALUES (
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
         );
     """
     for _, row in listings_df.iterrows():

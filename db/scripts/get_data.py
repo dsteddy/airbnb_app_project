@@ -166,3 +166,7 @@ def create_user_df(df: pd.DataFrame) -> pd.DataFrame:
     user_df['housing'] = user_df['housing'].apply(lambda x: ','.join(map(str, x)))
 
     return user_df
+
+def remove_host_info_from_listings(df: pd.DataFrame) -> pd.DataFrame:
+    new_df = df.drop(columns=["host_name", "host_about", "host_picture_url"])
+    return new_df

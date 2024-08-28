@@ -9,4 +9,5 @@ export const routes: Routes = [
     { path: 'listing/:id', component: ListingDetailsComponent },
     { path: 'add', component: CreateListingComponent },
     { path: 'signup', component: CreateUserComponent },
+    // { path: 'login', component: }
 ];

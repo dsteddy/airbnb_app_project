@@ -14,7 +14,8 @@ from scripts.get_data import (
     load_csv_to_dataframe,
     remove_csv,
     clean_listings,
-    create_user_df
+    create_user_df,
+    remove_host_info_from_listings
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -44,6 +45,9 @@ def load_data_in_db():
     listings_df_cleaned = clean_listings(listings_df)
     user_df = create_user_df(listings_df_cleaned)
 
+    # Step 5.2: Delete user info from listings_df
+    listings_df_final = remove_host_info_from_listings(listings_df_cleaned)
+
     # Step 6: Connect to the database
     connection = create_db_connection(db_params)
     if connection is None:
@@ -52,7 +56,7 @@ def load_data_in_db():
     # Step 7: Create and insert data into the listings table
     with closing(connection.cursor()) as cursor:
         create_listings_table(cursor)
-        insert_listings_data(cursor, listings_df_cleaned)
+        insert_listings_data(cursor, listings_df_final)
         connection.commit()
         logger.info("Data has been inserted succesfully in listings table.")
 

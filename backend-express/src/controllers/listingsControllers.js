@@ -42,7 +42,16 @@ const getListingsCount = (req, res) => {
 
 const getListingById = (req, res) => {
     const id = req.params.id;
-    const sqlQuery = "SELECT * FROM listings WHERE id = ?;"
+    const sqlQuery = "\
+        SELECT\
+            listings.*,\
+            users.name as host_name,\
+            users.description as host_about,\
+            users.picture_url as host_picture_url\
+        FROM listings\
+        JOIN users on listings.host_id = users.id\
+        WHERE listings.id = ?;\
+        ";
     database
         .query(sqlQuery, [id])
         .then(([listing]) => {
@@ -111,20 +120,40 @@ const deleteListingById = (req, res) => {
         .query(sqlQuery, [idToDelete])
         .then(([result]) => {
             if (result.affectedRows === 0) {
-                return res.status(404).send({ error: "Listing not found "});
+                return res.status(404).send({ error: "Listing not found " });
             }
-            res.status(200).send({ message: `Listing with id ${idToDelete} deleted successfully`})
+            res.status(200).send({ message: `Listing with id ${idToDelete} deleted successfully` })
         })
         .catch((err) => {
             console.error("Error deleting listing from the database:", err);
-            res.status(500).send({ error: "Error deleting listing "});
+            res.status(500).send({ error: "Error deleting listing " });
         });
 };
 
 const editListingById = (req, res) => {
     const idToEdit = parseInt(req.params.id)
-    // const { name, description, neighborhood_overview, picture_url,  }
-}
+    const { name, description, neighborhood_overview, picture_url, neighbourhood_cleansed, latitude, longitude, room_type, amenities, price, minimum_nights, maximum_nights } = req.body;
+    const sqlQuery = `
+        UPDATE listings
+        SET name = ?, description = ?, neighborhood_overview = ?, picture_url = ?, neighbourhood_cleansed = ?,
+        latitude = ?, longitude = ?, room_type = ?, amenities = ?, price = ?, minimum_nights = ?, maximum_nights = ?
+        WHERE id = ?;
+    `;
+    const sqlValues = [name, description, neighborhood_overview, picture_url, neighbourhood_cleansed,
+        latitude, longitude, room_type, amenities, price, minimum_nights, maximum_nights, idToEdit]
+    database
+        .query(sqlQuery, [sqlValues])
+        .then(([result]) => {
+            if (result.affectedRows === 0) {
+                return res.status(404).send({ error: "Listing not found " });
+            }
+            res.status(204).send({ message: `Listing with id ${idToEdit} updated succesfully` })
+        })
+        .catch((err) => {
+            console.error("Error updating listing from the database", err);
+            res.status(500).send({ error: "Error updating listing " });
+        });
+};
 
 module.exports = {
     getListings,
