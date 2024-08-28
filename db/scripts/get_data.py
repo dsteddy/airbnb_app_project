@@ -162,6 +162,7 @@ def create_user_df(df: pd.DataFrame) -> pd.DataFrame:
             user_data[host_id]['housing'].append(row['id'])
 
     user_df = pd.DataFrame(user_data.values())
+    user_df = user_df.rename(columns={'host_id': 'id'})
     user_df['housing'] = user_df['housing'].apply(lambda x: ','.join(map(str, x)))
 
     return user_df

@@ -93,7 +93,7 @@ def insert_listings_data(cursor, listings_df: pd.DataFrame):
 def create_users_table(cursor):
     create_table_query = """
         CREATE TABLE IF NOT EXISTS users (
-            host_id INT PRIMARY KEY,
+            id INT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
@@ -107,13 +107,13 @@ def create_users_table(cursor):
 
 def insert_users_data(cursor, user_df: pd.DataFrame):
     insert_query = """
-        INSERT INTO users (host_id, name, email, password, description, picture_url, housing, is_host)
+        INSERT INTO users (id, name, email, password, description, picture_url, housing, is_host)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
     """
 
     for _, row in user_df.iterrows():
         cursor.execute(insert_query, (
-            row['host_id'],
+            row['id'],
             row['name'],
             row['email'],
             row['password'],
@@ -127,7 +127,7 @@ def add_foreign_key(cursor):
     alter_table_query = """
     ALTER TABLE listings
     ADD CONSTRAINT fk_host_id
-    FOREIGN KEY (host_id) REFERENCES users(host_id)
+    FOREIGN KEY (host_id) REFERENCES users(id)
     ON DELETE CASCADE ON UPDATE CASCADE;
     """
     cursor.execute(alter_table_query)

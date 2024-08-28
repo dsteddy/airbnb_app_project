@@ -38,7 +38,7 @@ export class CreateListingComponent {
       this.listingService.postListing(this.listingForm.value as Listing).subscribe({
         next: (response) => {
           // this.listingForm.reset();
-          console.log("Succes", this.listingForm)
+          console.log("Success", this.listingForm)
         },
         error: (error) => {
           console.error("Error adding listing:", error);
