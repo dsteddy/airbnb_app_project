@@ -1,56 +1,105 @@
 .user-profile {
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 800px; /* Adjust as needed */
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px; /* Adjust as needed */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff00bf; /* Add a border to match theme */
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.name-and-edit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-name {
+  margin-top: 0;
+  font-size: 2em;
+  color: #ff00bf;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff00bf;
+  font-size: 1.2em;
+}
+
+.save-button,
+.cancel-button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.save-button {
+  background-color: #ff00bf;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.profile-info p {
+  margin: 10px 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.profile-info p strong {
+  color: #ff00bf;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .profile-header {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
   }
-  
+
   .profile-picture {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ff00bf; /* Add a border to match theme */
+    width: 100px;
+    height: 100px;
   }
-  
-  .profile-info {
-    flex: 1;
-  }
-  
-  .profile-name {
-    margin-top: 0;
-    font-size: 2em;
-    color: #ff00bf;
-  }
-  
-  .profile-info p {
-    margin: 10px 0;
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  .profile-info p strong {
-    color: #ff00bf;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .profile-header {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .profile-picture {
-      width: 100px;
-      height: 100px;
-    }
-  }
-  
+}

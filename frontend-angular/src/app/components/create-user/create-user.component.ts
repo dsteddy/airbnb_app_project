@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-user',
@@ -16,9 +17,11 @@ export class CreateUserComponent {
   isSubmitting = false;
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  type: 'login' | 'signup' | 'reset' = 'signup';
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -45,13 +48,15 @@ export class CreateUserComponent {
         next: (response) => {
           this.successMessage = "User created successfully!";
           this.errorMessage = null;
-          this.userForm.reset();
+          this.router.navigate(['']);
         },
         error: (error) => {
           if (error.error && error.error.error === 'Email already exists') {
             this.errorMessage = "The email address is already registered.";
+            this.isSubmitting = false;
           } else {
             this.errorMessage = "Error adding user. Please try again.";
+            this.isSubmitting = false;
           }
           this.successMessage = null;
           console.error("Error adding user:", error);

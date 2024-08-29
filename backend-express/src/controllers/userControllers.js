@@ -105,7 +105,7 @@ const editUserById = (req, res) => {
     const values = [name, email, hashedPassword || password, description, picture_url, idToEdit];
 
     database
-        .query(sqlQuery, [values])
+        .query(sqlQuery, values)
         .then(([result]) => {
             if (result.affectedRows === 0) {
                 return res.status(404).send({ error: "User not found " });

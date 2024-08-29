@@ -26,12 +26,10 @@ export class UserService {
 
   getProfile(): Observable<User>{
     const token = this.getToken();
-    console.log(token)
     const headers = new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : ''
     });
     const decodedToken: any = jwtDecode(token as string);
-    console.log(decodedToken)
     const id = decodedToken.id;
     return this.http.get<User>(`${this.apiUrl}/${id}`, { headers });
   }
@@ -51,4 +49,13 @@ export class UserService {
   logout(): void {
     localStorage.removeItem('token');
   }
+
+  deleteAccount(id: number): Observable<User> {
+    return this.http.delete<User>(`${this.apiUrl}/${id}`)
+  }
+
+  updateProfile(id: number, modifiedUser: any): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}`, modifiedUser)
+  }
+
 }
