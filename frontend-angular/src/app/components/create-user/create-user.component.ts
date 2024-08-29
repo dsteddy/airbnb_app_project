@@ -48,7 +48,11 @@ export class CreateUserComponent {
           this.userForm.reset();
         },
         error: (error) => {
-          this.errorMessage = "Error adding user. Please try again.";
+          if (error.error && error.error.error === 'Email already exists') {
+            this.errorMessage = "The email address is already registered.";
+          } else {
+            this.errorMessage = "Error adding user. Please try again.";
+          }
           this.successMessage = null;
           console.error("Error adding user:", error);
         },

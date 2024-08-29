@@ -62,7 +62,11 @@ const postUser = (req, res) => {
             res.status(201).json({ message: 'User added succesfully!' });
         })
         .catch((err) => {
-            res.status(500).json({ error: err.message });
+            if (err.code === 'ER_DUP_ENTRY') {
+                res.status(400).json({ error: 'Email already exists' });
+            } else {
+                res.status(500).json({ error: err.message });
+            }
         });
 };
 

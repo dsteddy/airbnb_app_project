@@ -6,11 +6,15 @@ import logging
 import random
 import string
 import bcrypt
+import unidecode
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def download_csv(csv_url: str, csv_file_path: str) -> bool:
+    """
+    Download the gzip file from specified url
+    """
     try:
         response = requests.get(csv_url)
         response.raise_for_status()
@@ -23,6 +27,9 @@ def download_csv(csv_url: str, csv_file_path: str) -> bool:
         return False
 
 def load_csv_to_dataframe(csv_file_path: str) -> pd.DataFrame:
+    """
+    Open a gzip file and load the csv inside into a DataFrame.
+    """
     try:
         with gzip.open(csv_file_path, 'rb') as f:
             df = pd.read_csv(f)
@@ -33,6 +40,9 @@ def load_csv_to_dataframe(csv_file_path: str) -> pd.DataFrame:
         return None
 
 def remove_csv(csv_file_path):
+    """
+    Delete the temp downloaded files.
+    """
     try:
         os.remove(csv_file_path)
         logger.info(f"Removed the gz file: {csv_file_path}")
@@ -40,6 +50,9 @@ def remove_csv(csv_file_path):
         logger.error(f"Error removing the gz file: {e}")
 
 def clean_listings(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Clean the listings DataFrame, dropping unused columns and removing NaNs
+    """
     # Drop unnecessary columns
     cols_to_drop = [
         "listing_url",
@@ -134,16 +147,33 @@ def clean_listings(df: pd.DataFrame) -> pd.DataFrame:
     return df_cleaned
 
 def create_user_df(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Create the user DataFrame from listings by taking all the unique host_id and creating
+    random passwords and unique email address.
+    """
     # Extract necessary columns
     host_data = df[['host_name', 'host_about', 'host_picture_url', 'host_id', 'id']].copy()
 
-    # Generate random emails and passwords
-    def generate_email(host_name):
-        return f"{host_name.lower().replace(' ', '_')}@example.com"
+    # Dict to keep track of generated emails
+    generated_emails = {}
 
-    def generate_password(length=10):
+    # Generate random emails and passwords
+    def generate_email(host_name: str) -> str:
+        base_email = unidecode.unidecode(host_name).lower().replace(' ', '_')
+        email = f"{base_email}@example.com"
+        counter = 1
+
+        while email in generated_emails:
+            email = f"{base_email}{counter}@example.com"
+            counter += 1
+
+        generated_emails[email] = True
+        return email
+
+    def generate_password(length=10) -> str:
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
+    # Password encryption (too long)
     # def hash_password(plain_password):
     #     salt = bcrypt.gensalt()
     #     hashed_password = bcrypt.hashpw(plain_password.encode('utf-8'), salt)
@@ -174,5 +204,8 @@ def create_user_df(df: pd.DataFrame) -> pd.DataFrame:
     return user_df
 
 def remove_host_info_from_listings(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Remove all the host informations except the id from the listing DataFrame.
+    """
     new_df = df.drop(columns=["host_name", "host_about", "host_picture_url"])
     return new_df

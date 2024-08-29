@@ -22,6 +22,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def load_data_in_db():
+    """
+    Connect to the MySQL DB, download the csv file, cleans it and insert the values in the tables.
+    """
     # Step 1: Get database connection parameters
     db_params = get_db_connection_params()
     if not db_params:

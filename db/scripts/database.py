@@ -10,6 +10,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def get_db_connection_params() -> dict:
+    """
+    Get all the parameters used to connect to the MySQL DB from the .env file.
+    """
     host = os.getenv("MYSQL_HOST")
     port = int(os.getenv("MYSQL_PORT", 3306))
     user = os.getenv("MYSQL_USER")
@@ -28,6 +31,9 @@ def get_db_connection_params() -> dict:
         }
 
 def create_db_connection(params: dict):
+    """
+    Use pymysql to create a connection to the MySQL DB.
+    """
     try:
         connection = pymysql.connect(
             host=params['host'],
@@ -41,6 +47,9 @@ def create_db_connection(params: dict):
         logger.error(f"Failed to connect to the database: {e}")
 
 def create_listings_table(cursor):
+    """
+    Create the listings table in the MySQL DB if it doesn't already exist.
+    """
     create_table_query = """
        CREATE TABLE IF NOT EXISTS listings (
             id INT PRIMARY KEY,
@@ -69,6 +78,9 @@ def create_listings_table(cursor):
     cursor.execute(create_table_query)
 
 def insert_listings_data(cursor, listings_df: pd.DataFrame):
+    """
+    Insert all values from the listings DataFrame into the listings table in the MySQL DB.
+    """
     insert_query = """
         INSERT INTO listings (
             id, name, description, neighborhood_overview, picture_url, host_id,
@@ -88,11 +100,14 @@ def insert_listings_data(cursor, listings_df: pd.DataFrame):
             continue
 
 def create_users_table(cursor):
+    """
+    Create the users table in the MySQL DB if it doesn't already exist.
+    """
     create_table_query = """
         CREATE TABLE IF NOT EXISTS users (
             id INT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
             description TEXT,
             picture_url TEXT,
@@ -103,6 +118,9 @@ def create_users_table(cursor):
     cursor.execute(create_table_query)
 
 def insert_users_data(cursor, user_df: pd.DataFrame):
+    """
+    Insert all values from the users DataFrame into the users table in the MySQL DB.
+    """
     insert_query = """
         INSERT INTO users (id, name, email, password, description, picture_url, housing, is_host)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
@@ -121,6 +139,9 @@ def insert_users_data(cursor, user_df: pd.DataFrame):
         ))
 
 def add_foreign_key(cursor):
+    """
+    Create the foreign key rule between the listings and users tables.
+    """
     alter_table_query = """
     ALTER TABLE listings
     ADD CONSTRAINT fk_host_id
