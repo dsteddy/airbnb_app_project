@@ -58,4 +58,7 @@ export class UserService {
     return this.http.put<User>(`${this.apiUrl}/${id}`, modifiedUser)
   }
 
+  userBecomeHost(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/host/${id}`)
+  }
 }

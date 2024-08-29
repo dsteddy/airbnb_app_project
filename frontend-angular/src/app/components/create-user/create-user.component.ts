@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
@@ -48,7 +48,7 @@ export class CreateUserComponent {
         next: (response) => {
           this.successMessage = "User created successfully!";
           this.errorMessage = null;
-          this.router.navigate(['']);
+          this.router.navigate(['login']);
         },
         error: (error) => {
           if (error.error && error.error.error === 'Email already exists') {

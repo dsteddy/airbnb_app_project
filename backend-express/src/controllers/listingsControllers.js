@@ -70,11 +70,9 @@ const getListingById = (req, res) => {
 const postListing = (req, res) => {
     // Destructure the request body to get the form values
     const {
-        name, description, neighborhood_overview, picture_url, host_name, host_about,
-        host_picture_url, neighbourhood_cleansed, latitude, longitude, room_type,
-        amenities, price, minimum_nights, maximum_nights
+        name, description, neighborhood_overview, picture_url, neighbourhood_cleansed,
+        latitude, longitude, room_type, amenities, price, minimum_nights, maximum_nights, host_id
     } = req.body;
-
     // Query the maximum ID from the database
     database
         .execute('SELECT MAX(id) AS maxId FROM listings')
@@ -92,14 +90,14 @@ const postListing = (req, res) => {
             const review_scores_location = 0;
 
             const sqlQuery = `INSERT INTO listings
-                (id, name, description, neighborhood_overview, picture_url, host_name, host_about, host_picture_url,
-                neighbourhood_cleansed, latitude, longitude, room_type, amenities, price, minimum_nights,
+                (id, name, description, neighborhood_overview, picture_url, host_id, neighbourhood_cleansed,
+                latitude, longitude, room_type, amenities, price, minimum_nights,
                 maximum_nights, number_of_reviews, number_of_reviews_l30d, review_scores_rating,
                 review_scores_cleanliness, review_scores_checkin, review_scores_communication, review_scores_location)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-            const values = [newId, name, description, neighborhood_overview, picture_url, host_name, host_about, host_picture_url,
-                neighbourhood_cleansed, latitude, longitude, room_type, amenities, price, minimum_nights,
+            const values = [newId, name, description, neighborhood_overview, picture_url,
+                host_id, neighbourhood_cleansed, latitude, longitude, room_type, amenities, price, minimum_nights,
                 maximum_nights, number_of_reviews, number_of_reviews_l30d, review_scores_rating, review_scores_cleanliness,
                 review_scores_checkin, review_scores_communication, review_scores_location];
 
@@ -155,11 +153,34 @@ const editListingById = (req, res) => {
         });
 };
 
+const getUsersListings = (req, res) => {
+    const id = req.params.id;
+    const sqlQuery = `
+        SELECT
+            *
+        FROM listings
+        WHERE host_id = ?;`;
+    database
+        .query(sqlQuery, [id])
+        .then(([listings]) => {
+            if (listings.length > 0) {
+                res.json(listings);
+            } else {
+                res.json({ message: "No listing for this user" });
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+};
+
 module.exports = {
     getListings,
     getListingsCount,
     getListingById,
     postListing,
     deleteListingById,
-    editListingById
+    editListingById,
+    getUsersListings,
 }

@@ -16,13 +16,15 @@ app.get("/api/listings/:id", listingsControllers.getListingById);
 app.post("/api/listings", listingsControllers.postListing);
 app.delete("/api/listings/:id", listingsControllers.deleteListingById);
 app.put("/api/listings/:id", listingsControllers.editListingById);
+app.get("/api/listings/user/:id", listingsControllers.getUsersListings)
 
 // Users
 app.get("/api/users", userControllers.getUsers);
-app.get("/api/users/:id", verifyToken, userControllers.getUserById);
+app.get("/api/users/:id", userControllers.getUserById);
 app.post("/api/users", userControllers.postUser);
 app.post("/api/users/login", userControllers.loginUser);
 app.delete("/api/users/:id", userControllers.deleteUser);
 app.put("/api/users/:id", userControllers.editUserById);
+app.get("/api/users/host/:id", userControllers.userBecomeHost);
 
 module.exports = app;

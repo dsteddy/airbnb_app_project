@@ -77,3 +77,23 @@ nav ul li a:hover {
     margin-right: 8px; /* Space between icon and text */
   }
   
+  /* Button for adding a property */
+.btn-add-property {
+    background-color: #ff00bf; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px 16px; /* Padding for spacing */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Flex display to align icon and text */
+    align-items: center; /* Center icon and text vertically */
+    font-size: 16px; /* Font size to match other text */
+}
+
+.btn-add-property:hover {
+    background-color: #45a049; /* Darker green background on hover */
+}
+
+.btn-add-property i {
+    margin-right: 8px; /* Space between icon and text */
+}

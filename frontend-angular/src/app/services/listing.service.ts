@@ -25,7 +25,11 @@ export class ListingService {
     return this.http.get<Listing>(`${this.apiUrl}/${id}`);
   }
 
-  postListing(newListing: Listing): Observable<Listing> {
-    return this.http.post<Listing>(`${this.apiUrl}`, newListing)
+  postListing(newListing: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, newListing)
+  }
+
+  getUsersListings(id: number): Observable<Listing[]> {
+    return this.http.get<Listing[]>(`${this.apiUrl}/user/${id}`)
   }
 }

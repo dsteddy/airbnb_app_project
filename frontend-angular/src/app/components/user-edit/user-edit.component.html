@@ -1,0 +1,27 @@
+<div class="user-profile" *ngIf="userProfile">
+    <div class="profile-header">
+
+      <img class="profile-picture" src="{{ userProfile.picture_url }}" alt="{{ userProfile.name }}">
+      <div class="profile-info">
+
+        <div class="edit">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <label for="name">Name:</label>
+                    <input id="name" formControlName="name" type="text" class="form-control" />
+
+                </div>
+            </form>
+          <h1 class="profile-name">{{ userProfile.name }}</h1>
+        </div>
+
+        <p><strong>Email :</strong> {{ userProfile.email }}</p>
+
+
+        <p><strong>Description :</strong> {{ userProfile.description }}</p>
+
+        <!-- <p><strong>Hôte :</strong> {{ userProfile.is_host === 1 ? 'Oui' : 'Non' }}</p>
+        <p *ngIf="userProfile.is_host === 1"><strong>Logements en location :</strong> {{ userProfile.housing || 'N/A' }}</p> -->
+      </div>
+    </div>
+  </div>

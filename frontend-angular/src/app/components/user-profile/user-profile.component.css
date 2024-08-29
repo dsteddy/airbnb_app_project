@@ -1,7 +1,7 @@
 .user-profile {
   padding: 20px;
   margin: 20px auto;
-  max-width: 800px; /* Adjust as needed */
+  max-width: 800px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -9,16 +9,19 @@
 
 .profile-header {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping to maintain layout on smaller screens */
+  align-items: flex-start; /* Align items to the top */
   gap: 20px;
+  position: relative;
 }
 
 .profile-picture {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ff00bf; /* Add a border to match theme */
+  border: 2px solid #ff00bf;
+  flex-shrink: 0; /* Prevent shrinking of the profile picture */
 }
 
 .profile-info {
@@ -91,15 +94,109 @@
   color: #ff00bf;
 }
 
+/* New CSS for become-host button */
+.become-host {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff00bf;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.become-host:hover {
+  background-color: #45a049;
+}
+
+.become-host:focus {
+  outline: none;
+}
+
+.become-host:active {
+  background-color: #388e3c;
+}
+
+/* Updated CSS for delete-account button */
+.delete-account {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 150px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.delete-account:hover {
+  background-color: #cc0000;
+}
+
+.delete-account:focus {
+  outline: none;
+}
+
+.delete-account:active {
+  background-color: #990000;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .profile-header {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row; /* Ensure picture remains on top left */
+    align-items: flex-start; /* Align items to the top */
   }
 
   .profile-picture {
     width: 100px;
     height: 100px;
   }
+
+  .delete-account {
+    width: 100px;
+  }
+
+  .become-host {
+    width: 100px;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+  }
+}
+
+/* Add logement button */
+.add-logement {
+  display: inline-block;
+  background-color: #ff00bf;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-logement:hover {
+  background-color: #45a049;
+}
+
+.add-logement:focus {
+  outline: none;
+}
+
+.add-logement:active {
+  background-color: #388e3c;
 }

@@ -2,35 +2,42 @@
   <div class="profile-header">
     <img class="profile-picture" src="{{ userProfile.picture_url }}" alt="{{ userProfile.name }}">
     <div class="profile-info">
+
       <div class="name-and-edit">
-        <h1 class="profile-name" *ngIf="!isEditing">{{ userProfile.name }}</h1>
-        <p *ngIf="isEditing">Nom</p>
-        <input *ngIf="isEditing" [(ngModel)]="editingUser.name" class="edit-input" type="text">
-        <button *ngIf="!isEditing" class="edit-button" (click)="startEditing(userProfile)">
+        <h1 class="profile-name">{{ userProfile.name }}</h1>
+        <button class="edit-button" [routerLink]="['/profile/edit']">
           <i class="fas fa-pencil-alt"></i>
         </button>
       </div>
-      <p *ngIf="!isEditing"><strong>Email :</strong> {{ userProfile.email }}</p>
-      <p *ngIf="isEditing">Email</p>
-      <input *ngIf="isEditing" [(ngModel)]="editingUser.email" class="edit-input" type="email">
+      <p><strong>Email :</strong> {{ userProfile.email }}</p>
+      <p><strong>Description :</strong> {{ userProfile.description }}</p>
 
-      <p *ngIf="isEditing">Mot de passe :</p>
-      <input *ngIf="isEditing" [(ngModel)]="editingUser.password" class="edit-input" type="password">
+      <!-- Display 'Mes logements' and listings only if the user is a host -->
+      <div *ngIf="userProfile.is_host === 1">
+        <p><strong>Mes logements :</strong></p>
 
-      <p *ngIf="isEditing">Confirmer le mot de passe :</p>
-      <input *ngIf="isEditing" [(ngModel)]="editingUser.confirmPassword" class="edit-input" type="password">
+        <!-- Add new logement button -->
+        <button class="add-logement" [routerLink]="['/listings/add']">
+          Ajouter un logement
+        </button>
 
-      <p *ngIf="!isEditing"><strong>Description :</strong> {{ userProfile.description }}</p>
-      <textarea *ngIf="isEditing" [(ngModel)]="editingUser.description" class="edit-input" placeholder="Entrez une description..."></textarea>
+        <div *ngIf="userListings && userListings.length > 0">
+          <div class="listing" *ngFor="let listing of userListings">
+            <app-listing-card [listing]="listing"></app-listing-card>
+          </div>
+        </div>
+        <div *ngIf="!userListings || userListings.length === 0">
+          <p>Pas de logements en location.</p>
+        </div>
 
-      <p><strong>Hôte :</strong> {{ userProfile.is_host === 1 ? 'Oui' : 'Non' }}</p>
-      <p *ngIf="userProfile.is_host === 1"><strong>Logements en location :</strong> {{ userProfile.housing || 'N/A' }}</p>
+
+      </div>
     </div>
-  </div>
 
-  <div class="edit-buttons" *ngIf="isEditing">
-    <button class="save-button" (click)="saveProfile()">Save</button>
-    <button class="cancel-button" (click)="cancelEdit()">Cancel</button>
+    <!-- Become host button if the user is not a host -->
+    <button *ngIf="userProfile.is_host === 0" class="become-host" (click)="becomeHost()">
+      Devenir hôte
+    </button>
   </div>
 
   <button class="delete-account" (click)="onDeleteAccount()">
