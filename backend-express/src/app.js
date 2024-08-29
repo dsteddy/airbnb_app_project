@@ -7,6 +7,7 @@ app.use(cors());
 
 const listingsControllers = require ("./controllers/listingsControllers");
 const userControllers = require("./controllers/userControllers");
+const verifyToken = require("./controllers/verifyToken");
 
 // Listings
 app.get("/api/listings", listingsControllers.getListings);
@@ -18,8 +19,9 @@ app.put("/api/listings/:id", listingsControllers.editListingById);
 
 // Users
 app.get("/api/users", userControllers.getUsers);
-app.get("/api/users/:id", userControllers.getUserById);
+app.get("/api/users/:id", verifyToken, userControllers.getUserById);
 app.post("/api/users", userControllers.postUser);
+app.post("/api/users/login", userControllers.loginUser);
 app.delete("/api/users/:id", userControllers.deleteUser);
 app.put("/api/users/:id", userControllers.editUserById);
 

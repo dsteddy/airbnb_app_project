@@ -1,0 +1,12 @@
+<div class="user-profile" *ngIf="userProfile">
+    <div class="profile-header">
+      <img class="profile-picture" src="{{ userProfile.picture_url }}" alt="{{ userProfile.name }}">
+      <div class="profile-info">
+        <h1 class="profile-name">{{ userProfile.name }}</h1>
+        <p><strong>Email:</strong> {{ userProfile.email }}</p>
+        <p *ngIf="userProfile.description"><strong>Description:</strong> {{ userProfile.description }}</p>
+        <p><strong>Host:</strong> {{ userProfile.is_host === 1 ? 'Yes' : 'No' }}</p>
+        <p><strong>Housing Count:</strong> {{ userProfile.housing || 'N/A' }}</p>
+      </div>
+    </div>
+  </div>

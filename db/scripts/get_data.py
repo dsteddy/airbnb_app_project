@@ -5,6 +5,7 @@ import os
 import logging
 import random
 import string
+import bcrypt
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -142,6 +143,11 @@ def create_user_df(df: pd.DataFrame) -> pd.DataFrame:
 
     def generate_password(length=10):
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
+    # def hash_password(plain_password):
+    #     salt = bcrypt.gensalt()
+    #     hashed_password = bcrypt.hashpw(plain_password.encode('utf-8'), salt)
+    #     return hashed_password.decode('utf-8')
 
     # Process host data
     user_data = {}

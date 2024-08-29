@@ -37,7 +37,7 @@ const getUserById = (req, res) => {
 
 const postUser = (req, res) => {
     const { name, email, password, description, picture_url } = req.body;
-    // const hashedPassword = bcrypt.hashSync(password, 8)
+    const hashedPassword = bcrypt.hashSync(password, 8)
 
     database
         .execute('SELECT MAX(id) AS maxId FROM users')
@@ -45,6 +45,8 @@ const postUser = (req, res) => {
             const maxId = maxIdResult[0].maxId || 0;
             const newId = maxId + 1
 
+            const description = '';
+            const picture_url = 'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg';
             const housing = '';
             const is_host = 0;
 
@@ -52,7 +54,7 @@ const postUser = (req, res) => {
                 (id, name, email, password, description, picture_url, housing, is_host)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-            const values = [newId, name, email, password, description, picture_url, housing, is_host];
+            const values = [newId, name, email, hashedPassword, description, picture_url, housing, is_host];
 
             return database.execute(sqlQuery, values);
         })
@@ -84,9 +86,22 @@ const deleteUser = (req, res) => {
 const editUserById = (req, res) => {
     const idToEdit = parseInt(req.params.id)
     const { name, email, password, description, picture_url } = req.body;
-    const sqlQuery = "UPDATE users SET name = ?, email = ?, password = ?, description = ?, picture_url = ? where id = ?"
+
+    let hashedPassword;
+
+    if (password) {
+        hashedPassword = bcrypt.hashSync(password, 8);
+    }
+
+    const sqlQuery = `
+    UPDATE users
+    SET name = ?, email = ?, password = ?, description = ?, picture_url = ?
+    where id = ?`;
+
+    const values = [name, email, hashedPassword || password, description, picture_url, idToEdit];
+
     database
-        .query(sqlQuery, [name, email, password, description, picture_url, idToEdit])
+        .query(sqlQuery, [values])
         .then(([result]) => {
             if (result.affectedRows === 0) {
                 return res.status(404).send({ error: "User not found " });
@@ -99,10 +114,44 @@ const editUserById = (req, res) => {
         });
 };
 
+const loginUser = (req, res) => {
+    const { email, password } = req.body;
+
+    const sqlQuery = 'SELECT * FROM users WHERE email = ?';
+    database
+        .query(sqlQuery, [email])
+        .then(([users]) => {
+            if (users.length === 0) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const user = users[0];
+            const passwordIsValid = bcrypt.compareSync(password, user.password);
+
+            if (!passwordIsValid) {
+                return res.status(401).json({ error: 'Invalid password' });
+            }
+
+            const token = jwt.sign({ id: user.id, is_host: user.is_host }, process.env.JWT_SECRET, {
+                expiresIn: 86400, // 24 hours
+            });
+
+            res.status(200).json({
+                id: user.id,
+                email: user.email,
+                token: token,
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err.message });
+        });
+};
+
 module.exports = {
     getUsers,
     getUserById,
     postUser,
     deleteUser,
-    editUserById
+    editUserById,
+    loginUser,
 }

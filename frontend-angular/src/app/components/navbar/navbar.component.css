@@ -55,3 +55,25 @@ nav ul li a:hover {
     background-color: rgba(255, 0, 191, 0.2); /* Light background color on hover */
     padding: 10px 15px; /* Increased padding on hover */
 }
+
+/* Logout button styling */
+.btn-logout {
+    background-color: #ff4d4d; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px 16px; /* Padding for spacing */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: flex; /* Flex display to align icon and text */
+    align-items: center; /* Center icon and text vertically */
+    font-size: 16px; /* Font size to match other text */
+  }
+  
+  .btn-logout:hover {
+    background-color: #cc0000; /* Darker red background on hover */
+  }
+  
+  .btn-logout i {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
@@ -16,16 +16,27 @@ export class CreateUserComponent {
   isSubmitting = false;
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  type: 'login' | 'signup' | 'reset' = 'signup';
 
   constructor(private fb: FormBuilder, private userService: UserService) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],
-      description: [''],
-      picture_url: ['']
+      confirmPassword: ['', []]
     });
   }
+
+  get password() {
+    return this.userForm?.get('password');
+  }
+
+  get confirmPassword() {
+    return this.userForm?.get('confirmPassword');
+  }
+  get passwordDoesMatch() {
+      return this.password?.value === this.confirmPassword?.value;
+    }
 
   onSubmit() {
     if (this.userForm.valid) {

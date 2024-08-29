@@ -1,20 +1,26 @@
 <nav>
     <ul class="left">
-        <li>
-            <a [routerLink]="['']"><i class="fas fa-home"></i> Accueil</a>
-        </li>
+      <li>
+        <a [routerLink]="['']"><i class="fas fa-home"></i> Accueil</a>
+      </li>
     </ul>
     <div class="nav-links">
-        <ul>
-            <li>
-                <a [routerLink]="['/signup']"><i class="fas fa-user-plus"></i> Créer un compte</a>
-            </li>
-            <li>
-                <a [routerLink]="['/login']"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
-            </li>
-            <li>
-                <a [routerLink]="['/profile']"><i class="fas fa-user"></i> Profil</a>
-            </li>
-        </ul>
+      <ul>
+        <li *ngIf="!userService.isAuthenticated()">
+          <a [routerLink]="['/signup']"><i class="fas fa-user-plus"></i> Créer un compte</a>
+        </li>
+        <li *ngIf="!userService.isAuthenticated()">
+          <a [routerLink]="['/login']"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
+        </li>
+
+        <li *ngIf="userService.isAuthenticated()">
+          <a [routerLink]="['/profile']"><i class="fas fa-user"></i> Profil</a>
+        </li>
+        <li *ngIf="userService.isAuthenticated()">
+          <button (click)="logout()" class="btn-logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </li>
+      </ul>
     </div>
-</nav>
+  </nav>
